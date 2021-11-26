@@ -1,0 +1,163 @@
+package LA2Q1;
+
+import java.util.Arrays;
+import java.util.Comparator;
+
+public class MariamMorganTestingSortingMethods {
+    public static void main(String[] args) {
+
+        header();
+        System.out.println("Testing execution time of different sorting algorithms for sorting 50000 random numbers: ");
+
+        int sz = 50000;
+        Integer[] array = new Integer[sz];
+        Integer[] backup = new Integer[sz];
+
+
+        for (int i = 0; i < array.length; i++) {
+            array[i] = (int) (Math.random() * 50000);
+        }
+
+
+        System.out.println("My Selection-Sort Time: " + (" ") + " milliseconds");
+
+        System.out.println("My Bubble-Sort Time: " + (bubbleSort(array)/1E6) + " milliseconds");
+        System.out.println("My Insertion-Sort Time: " + (insertionSort(array)/1E6) + " milliseconds");
+        System.out.println("My Merge-Sort Time: " + (mergeSort(array)/1E6) + " milliseconds");
+        System.out.println("My Quick-Sort Time: " + (quickSort(array,0, array.length-1))/1E6 + " milliseconds");
+
+
+
+        System.out.println(Arrays.toString(array));
+        footer();
+    }
+
+
+
+/*
+    //selection sort
+    public static <T extends Comparable <? super T>>long selectionSort (T [] a){
+
+    }
+    */
+
+
+    //bubble sort
+    public static < T extends Comparable <? super T >> long bubbleSort(T[] a){
+        long startTime = System.nanoTime();//starting time
+        int n = a.length;//length of array
+
+        for(int i = 1; i < a.length; i++){
+            for (int j = 0; j < a.length-1; j++){
+                if(a[j].compareTo(a[j+1]) > 0){
+                    T tem = a[j];
+                    a[j] = a[j+1];
+                    a[j+1] = tem;
+                }
+            }
+        }
+        long time = System.nanoTime() - startTime;
+        return time;
+    }
+
+
+    //insertion sort
+    public static < T extends Comparable <? super T >> long insertionSort(T[] a){
+        long startTime = System.nanoTime();//starting time
+        for(int i = 1; i < a.length; i++){
+            T key = a[i];
+            //If the a is a String, then it prob will only compares the first letter
+            for(int j = i-1; (j>=0) && a[j].compareTo(key)>0; j--){
+                a[j+1] = a[j];
+                a[j] = key;
+            }
+        }
+        long time = System.nanoTime() - startTime;
+        return time;
+    }
+
+
+
+    //mergeSort:
+    public static <T extends Comparable <? super T>>long mergeSort (T [] a){
+        long startTime = System.nanoTime();//starting time
+        int n = a.length;//length of array
+
+        if (n < 2) {//trivially sorted if there's less than 2 elements
+            return (System.nanoTime() - startTime);//return the amount of time spent
+        }
+
+        int mid = n/2;//integer division to find the "middle"
+        T[] S1 = Arrays.copyOfRange(a, 0, mid);;//1st half of array
+        T[] S2 = Arrays.copyOfRange(a, mid, n);;//2nd half of array
+        mergeSort(S1);
+        mergeSort(S2);//mergeSort is applied recursively on each half
+
+        //sorting merging the components back
+        int i = 0, j = 0;
+        while (i + j < a.length) {
+            if (j == S2.length || (i < S1.length && S1[i].compareTo(S2[j])< 0)) {
+                a[i + j] = S1[i++]; // copy ith element of S1 and increment i
+            }
+            else {
+                a[i + j] = S2[j++];// copy jth element of S2 and increment j
+            }
+        }
+        //sorted
+        return (System.nanoTime() - startTime);//how long it took
+    }
+
+
+    //quickSort:
+    public static <T extends Comparable<? super T>> long quickSort(T[] s, int a, int b){
+        long startTime = System.nanoTime();//starting time
+        if(a >= b)
+            return (System.nanoTime() - startTime);
+
+        int left = a;
+        int right = b;
+        T pivot = s[(a+b)/2];
+        T temp;
+        while (left <= right){
+            while(s[left].compareTo(pivot) < 0)
+                left++;
+            while(s[right].compareTo(pivot) > 0)
+                right--;
+            if (left <= right) {
+                temp = s[left];
+                s[left] = s[right];
+                s[right] = temp;
+                left++;
+                right--;
+            }
+        }
+        /*
+        temp = s[left];
+        s[left] = s[b];
+        s[b] = temp;
+
+        quickSort(s,a,left-1);
+        quickSort(s,left+1,b);*/
+
+        if(a<right){
+            quickSort(s,a,right);}
+        if(left<b){
+            quickSort(s,left,b);}
+
+        return (System.nanoTime() - startTime);//how long it took
+    }
+
+    public static void header(){
+        System.out.println("*******************************************************");
+        System.out.println("Names: Mariam Al-Zubaidi and Morgan Walker\nStudent Numbers: 251077904 and 1111");
+        System.out.println("Goal of this project: ");
+        System.out.println("*******************************************************\n");
+    }
+
+    public static void footer(){
+        System.out.println("\n***************************************");
+        //time
+        System.out.println("Completion of Lab Assignment 1 is successful!\n" + "Good bye! yourFullName.");
+        System.out.println("***************************************");
+    }
+}
