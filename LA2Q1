@@ -9,7 +9,6 @@ public class MariamMorganTestingSortingMethods {
     public static void main(String[] args) {
 
         header();
-        System.out.println("Testing execution time of different sorting algorithms for sorting 50000 random numbers: ");
 
         int sz = 5;
         Integer[] array = new Integer[sz];
@@ -22,28 +21,29 @@ public class MariamMorganTestingSortingMethods {
         }
 
         System.out.print("ARRAY: ");
-        System.out.println(Arrays.toString(array));
-        System.out.println();
+        System.out.println(Arrays.toString(array)+"\n");
 
         System.arraycopy(array,0,backup,0,sz);//copying the original array to a the backup array
         ArrayList<Integer> randomList = new ArrayList<>(Arrays.asList(array));
 
 
-
+        System.out.println("Testing execution time of different sorting algorithms for sorting 50000 random numbers: ");
         //collections method
-        System.out.println(Arrays.toString(array));
         long startTime = System.nanoTime();
         Collections.sort(randomList);
         long time = System.nanoTime() - startTime;
-        System.out.println("Collections' Sorting Time: " + time/1E6 + "milliseconds");
+        System.out.println("Collections' Sorting Time: " + time/1E6 + " milliseconds");
+        //System.out.println(randomList.toString());
+        System.arraycopy(backup,0,array,0,sz);
+        //System.out.println(Arrays.toString(array));
+
+        //Selection Sort
+        System.out.println(Arrays.toString(array));
+        System.out.println("My Selection-Sort Time: " + (selectionSort(array)) + " milliseconds");
         System.out.println(Arrays.toString(array));
         System.arraycopy(backup,0,array,0,sz);
         System.out.println(Arrays.toString(array));
         System.out.println("--------");
-
-
-
-        //System.out.println("My Selection-Sort Time: " + (" ") + " milliseconds");
 
         //bubble sort
         //System.out.println(Arrays.toString(array));
@@ -72,15 +72,15 @@ public class MariamMorganTestingSortingMethods {
     }
 
 
-
-//selection sort
+    //Selection sort
     public static <T extends Comparable <? super T>>long selectionSort (T [] a){
         long startTime = System.nanoTime();//starting time
         int n = a.length;
-        for(int i = 1; i < a.length; i++) {
+
+        for(int i = 0; i < a.length-1; i++) {
             int index = i;
             for (int j = i + 1; j < a.length; j++) {
-                if (a[j].compareTo(a[j+1]) > 0) {
+                if (a[j].compareTo(a[j-1]) > 0) {
                     index = j;//searching for lowest index
                 }
             }
@@ -91,6 +91,7 @@ public class MariamMorganTestingSortingMethods {
         long time = System.nanoTime() - startTime;
         return time;
     }
+
 
 
     //bubble sort
@@ -200,7 +201,7 @@ public class MariamMorganTestingSortingMethods {
 
     public static void header(){
         System.out.println("*******************************************************");
-        System.out.println("Names: Mariam Al-Zubaidi and Morgan Walker\nStudent Numbers: 251077904 and 251183118");
+        System.out.println("Names: Mariam Al-Zubaidi and Morgan Walker\nStudent Numbers: 251077904 and 1111");
         System.out.println("Goal of this project: ");
         System.out.println("*******************************************************\n");
     }
