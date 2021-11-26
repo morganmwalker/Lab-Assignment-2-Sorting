@@ -1,6 +1,8 @@
 package LA2Q1;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 
 public class MariamMorganTestingSortingMethods {
@@ -9,26 +11,63 @@ public class MariamMorganTestingSortingMethods {
         header();
         System.out.println("Testing execution time of different sorting algorithms for sorting 50000 random numbers: ");
 
-        int sz = 50000;
+        int sz = 5;
         Integer[] array = new Integer[sz];
         Integer[] backup = new Integer[sz];
+
 
 
         for (int i = 0; i < array.length; i++) {
             array[i] = (int) (Math.random() * 50000);
         }
 
-
-        System.out.println("My Selection-Sort Time: " + (" ") + " milliseconds");
-
-        System.out.println("My Bubble-Sort Time: " + (bubbleSort(array)/1E6) + " milliseconds");
-        System.out.println("My Insertion-Sort Time: " + (insertionSort(array)/1E6) + " milliseconds");
-        System.out.println("My Merge-Sort Time: " + (mergeSort(array)/1E6) + " milliseconds");
-        System.out.println("My Quick-Sort Time: " + (quickSort(array,0, array.length-1))/1E6 + " milliseconds");
-
-
-
+        System.out.print("ARRAY: ");
         System.out.println(Arrays.toString(array));
+        System.out.println();
+
+        System.arraycopy(array,0,backup,0,sz);//copying the original array to a the backup array
+        ArrayList<Integer> randomList = new ArrayList<>(Arrays.asList(array));
+
+
+
+        //collections method
+        System.out.println(Arrays.toString(array));
+        long startTime = System.nanoTime();
+        Collections.sort(randomList);
+        long time = System.nanoTime() - startTime;
+        System.out.println("Collections' Sorting Time: " + time/1E6 + "milliseconds");
+        System.out.println(Arrays.toString(array));
+        System.arraycopy(backup,0,array,0,sz);
+        System.out.println(Arrays.toString(array));
+        System.out.println("--------");
+
+
+
+        //System.out.println("My Selection-Sort Time: " + (" ") + " milliseconds");
+
+        //bubble sort
+        //System.out.println(Arrays.toString(array));
+        System.out.println("My Bubble-Sort Time: " + (bubbleSort(array)/1E6) + " milliseconds");
+        //System.out.println(Arrays.toString(array));
+        System.arraycopy(backup,0,array,0,sz);
+        //System.out.println(Arrays.toString(array));
+        //System.out.println("--------");
+
+
+        //Insertion Sort
+        System.out.println("My Insertion-Sort Time: " + (insertionSort(array)/1E6) + " milliseconds");
+        System.arraycopy(backup,0,array,0,sz);
+
+        //Merge Sort
+        System.out.println("My Merge-Sort Time: " + (mergeSort(array)/1E6) + " milliseconds");
+        System.arraycopy(backup,0,array,0,sz);
+
+
+        //Quick Sort
+        System.out.println("My Quick-Sort Time: " + (quickSort(array,0, array.length-1))/1E6 + " milliseconds");
+        System.arraycopy(backup,0,array,0,sz);
+
+        //System.out.println(Arrays.toString(array));
         footer();
     }
 
