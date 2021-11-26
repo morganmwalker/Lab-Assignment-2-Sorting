@@ -73,12 +73,24 @@ public class MariamMorganTestingSortingMethods {
 
 
 
-/*
-    //selection sort
+//selection sort
     public static <T extends Comparable <? super T>>long selectionSort (T [] a){
-
+        long startTime = System.nanoTime();//starting time
+        int n = a.length;
+        for(int i = 1; i < a.length; i++) {
+            int index = i;
+            for (int j = i + 1; j < a.length; j++) {
+                if (a[j].compareTo(a[j+1]) > 0) {
+                    index = j;//searching for lowest index
+                }
+            }
+            T smallerNumber = a[index];
+            a[index] = a[i];
+            a[i] = smallerNumber;
+        }
+        long time = System.nanoTime() - startTime;
+        return time;
     }
-    */
 
 
     //bubble sort
@@ -188,7 +200,7 @@ public class MariamMorganTestingSortingMethods {
 
     public static void header(){
         System.out.println("*******************************************************");
-        System.out.println("Names: Mariam Al-Zubaidi and Morgan Walker\nStudent Numbers: 251077904 and 1111");
+        System.out.println("Names: Mariam Al-Zubaidi and Morgan Walker\nStudent Numbers: 251077904 and 251183118");
         System.out.println("Goal of this project: ");
         System.out.println("*******************************************************\n");
     }
