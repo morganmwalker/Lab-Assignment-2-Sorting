@@ -39,7 +39,7 @@ public class MariamMorganTestingSortingMethods {
 
         //Selection Sort
         System.out.println(Arrays.toString(array));
-        System.out.println("My Selection-Sort Time: " + (selectionSort(array)) + " milliseconds");
+        System.out.println("My Selection-Sort Time: " + (selectionSort(array)/1E6) + " milliseconds");
         System.out.println(Arrays.toString(array));
         System.arraycopy(backup,0,array,0,sz);
         System.out.println(Arrays.toString(array));
@@ -77,10 +77,10 @@ public class MariamMorganTestingSortingMethods {
         long startTime = System.nanoTime();//starting time
         int n = a.length;
 
-        for(int i = 0; i < a.length-1; i++) {
+        for(int i = 0; i < a.length - 1; i++) {
             int index = i;
             for (int j = i + 1; j < a.length; j++) {
-                if (a[j].compareTo(a[j-1]) > 0) {
+                if (a[index].compareTo(a[j]) > 0) {
                     index = j;//searching for lowest index
                 }
             }
