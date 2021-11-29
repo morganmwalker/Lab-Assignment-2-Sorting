@@ -209,7 +209,7 @@ public class MariamMorganTestingSortingMethods {
         Date date = new Date();
         SimpleDateFormat theTime = new SimpleDateFormat("HH:mm:ss");
         System.out.printf("This is %s on %s\n", theTime.format(time), theDate.format(date)); // prints current time and date
-        System.out.println("Completion of Lab Assignment 1 is successful!\n" + "GoodBye from Mariam Al-Zubaidi and Morgan Walker!");
+        System.out.println("Completion of Lab Assignment 2 is successful!\n" + "GoodBye from Mariam Al-Zubaidi and Morgan Walker!");
         System.out.println("***************************************");
     }
 }
