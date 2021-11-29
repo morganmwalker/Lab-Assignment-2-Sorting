@@ -1,58 +1,51 @@
 package LA2Q1;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
+import java.util.Date;
 
 public class MariamMorganTestingSortingMethods {
     public static void main(String[] args) {
 
-        header();
-
-        int sz = 5;
-        Integer[] array = new Integer[sz];
-        Integer[] backup = new Integer[sz];
+        header();   //calls header method to print student names and the goal
 
 
+        int sz = 50000;                         //size of the arrays
+        Integer[] array = new Integer[sz];      //declares an int type array with size 'sz'
+        Integer[] backup = new Integer[sz];     //declares an int type backup array with the same size
 
+
+        //populates the array with random numbers using Math.random()
         for (int i = 0; i < array.length; i++) {
             array[i] = (int) (Math.random() * 50000);
         }
 
-        System.out.print("ARRAY: ");
-        System.out.println(Arrays.toString(array)+"\n");
-
-        System.arraycopy(array,0,backup,0,sz);//copying the original array to a the backup array
+        //copies the original array with random numbers to the backup array
+        System.arraycopy(array,0,backup,0,sz);
+        //converting the array to an ArrayList so we can sort it using Collections.sort
         ArrayList<Integer> randomList = new ArrayList<>(Arrays.asList(array));
 
-
         System.out.println("Testing execution time of different sorting algorithms for sorting 50000 random numbers: ");
+
         //collections method
-        long startTime = System.nanoTime();
-        Collections.sort(randomList);
-        long time = System.nanoTime() - startTime;
-        System.out.println("Collections' Sorting Time: " + time/1E6 + " milliseconds");
-        //System.out.println(randomList.toString());
-        System.arraycopy(backup,0,array,0,sz);
-        //System.out.println(Arrays.toString(array));
+        long startTime = System.nanoTime();             //starting time
+        Collections.sort(randomList);                   //sorts the ArrayList using Collections.sort
+        long time = System.nanoTime() - startTime;      //end time
+        System.out.println("Collections' Sorting Time: " + time/1E6 + " milliseconds");     //prints the time it took Collections.sort to sort the random array
+        System.arraycopy(backup,0,array,0,sz);      //copying the backup array to the original array, to make sure that that its sorting the same unsorted array every time
+
 
         //Selection Sort
-        System.out.println(Arrays.toString(array));
-        System.out.println("My Selection-Sort Time: " + (selectionSort(array)/1E6) + " milliseconds");
-        System.out.println(Arrays.toString(array));
-        System.arraycopy(backup,0,array,0,sz);
-        System.out.println(Arrays.toString(array));
-        System.out.println("--------");
+        System.out.println("My Selection-Sort Time: " + (selectionSort(array)/1E6) + " milliseconds");      ////prints the time it took selection sort to sort the random array
+        System.arraycopy(backup,0,array,0,sz);      //copying the backup array to the original array again
+
 
         //bubble sort
-        //System.out.println(Arrays.toString(array));
         System.out.println("My Bubble-Sort Time: " + (bubbleSort(array)/1E6) + " milliseconds");
-        //System.out.println(Arrays.toString(array));
         System.arraycopy(backup,0,array,0,sz);
-        //System.out.println(Arrays.toString(array));
-        //System.out.println("--------");
-
+       
 
         //Insertion Sort
         System.out.println("My Insertion-Sort Time: " + (insertionSort(array)/1E6) + " milliseconds");
@@ -67,16 +60,16 @@ public class MariamMorganTestingSortingMethods {
         System.out.println("My Quick-Sort Time: " + (quickSort(array,0, array.length-1))/1E6 + " milliseconds");
         System.arraycopy(backup,0,array,0,sz);
 
-        //System.out.println(Arrays.toString(array));
-        footer();
+        footer();       //calls the footer method to print a goodbye message
     }
 
 
-    //Selection sort
+    //Selection Sort Method
     public static <T extends Comparable <? super T>>long selectionSort (T [] a){
         long startTime = System.nanoTime();//starting time
         int n = a.length;
 
+        // One by one move boundary of unsorted subarray
         for(int i = 0; i < a.length - 1; i++) {
             int index = i;
             for (int j = i + 1; j < a.length; j++) {
@@ -84,11 +77,12 @@ public class MariamMorganTestingSortingMethods {
                     index = j;//searching for lowest index
                 }
             }
+            // Swap the found minimum element with the first element
             T smallerNumber = a[index];
             a[index] = a[i];
             a[i] = smallerNumber;
         }
-        long time = System.nanoTime() - startTime;
+        long time = System.nanoTime() - startTime;      //end time
         return time;
     }
 
@@ -102,13 +96,14 @@ public class MariamMorganTestingSortingMethods {
         for(int i = 1; i < a.length; i++){
             for (int j = 0; j < a.length-1; j++){
                 if(a[j].compareTo(a[j+1]) > 0){
+                    //swapping the elements
                     T tem = a[j];
                     a[j] = a[j+1];
                     a[j+1] = tem;
                 }
             }
         }
-        long time = System.nanoTime() - startTime;
+        long time = System.nanoTime() - startTime;      //total time
         return time;
     }
 
@@ -120,62 +115,66 @@ public class MariamMorganTestingSortingMethods {
             T key = a[i];
             //If the a is a String, then it prob will only compares the first letter
             for(int j = i-1; (j>=0) && a[j].compareTo(key)>0; j--){
+                //The place where a[j] is greater than key, which continues until either reaching the 0th index, or reaching a number smaller than the key
                 a[j+1] = a[j];
                 a[j] = key;
             }
         }
-        long time = System.nanoTime() - startTime;
+        long time = System.nanoTime() - startTime;      //total time
         return time;
     }
 
 
 
-    //mergeSort:
+    //Merge Sort
     public static <T extends Comparable <? super T>>long mergeSort (T [] a){
         long startTime = System.nanoTime();//starting time
         int n = a.length;//length of array
 
-        if (n < 2) {//trivially sorted if there's less than 2 elements
-            return (System.nanoTime() - startTime);//return the amount of time spent
+        if (n < 2) {        //trivially sorted if there's less than 2
+            return (System.nanoTime() - startTime);//return the total time it took for less than 2
         }
 
-        int mid = n/2;//integer division to find the "middle"
-        T[] S1 = Arrays.copyOfRange(a, 0, mid);;//1st half of array
-        T[] S2 = Arrays.copyOfRange(a, mid, n);;//2nd half of array
-        mergeSort(S1);
-        mergeSort(S2);//mergeSort is applied recursively on each half
+        int mid = n/2;                                        //division to find the "middle"
+        T[] S1 = Arrays.copyOfRange(a, 0, mid);         //1st half of array
+        T[] S2 = Arrays.copyOfRange(a, mid, n);              //2nd half of array
+        mergeSort(S1);                                      //recursively calling the mergeSort for each half
+        mergeSort(S2);
 
         //sorting merging the components back
         int i = 0, j = 0;
         while (i + j < a.length) {
             if (j == S2.length || (i < S1.length && S1[i].compareTo(S2[j])< 0)) {
-                a[i + j] = S1[i++]; // copy ith element of S1 and increment i
+                a[i + j] = S1[i++];          //copy i-th element of S1 and increment i
             }
             else {
-                a[i + j] = S2[j++];// copy jth element of S2 and increment j
+                a[i + j] = S2[j++];         //copy jth element of S2 and increment j
             }
         }
         //sorted
-        return (System.nanoTime() - startTime);//how long it took
+        return (System.nanoTime() - startTime); //total time
     }
 
 
     //quickSort:
     public static <T extends Comparable<? super T>> long quickSort(T[] s, int a, int b){
         long startTime = System.nanoTime();//starting time
-        if(a >= b)
-            return (System.nanoTime() - startTime);
+        if(a >= b)      //trivially sorted if a is greater or equals to b
+            return (System.nanoTime() - startTime);     //returns time it took
 
         int left = a;
         int right = b;
         T pivot = s[(a+b)/2];
-        T temp;
+        T temp;         //temp for swapping elements
         while (left <= right){
+            //scan until reaches a value that is equal or larger than the pivot value
             while(s[left].compareTo(pivot) < 0)
                 left++;
+            //scan until reaches a value that is equal or smaller than the pivot value
             while(s[right].compareTo(pivot) > 0)
                 right--;
-            if (left <= right) {
+            if (left <= right) {        //indices did not strictly cross
+                //swap values and shrink range
                 temp = s[left];
                 s[left] = s[right];
                 s[right] = temp;
@@ -183,33 +182,34 @@ public class MariamMorganTestingSortingMethods {
                 right--;
             }
         }
-        /*
-        temp = s[left];
-        s[left] = s[b];
-        s[b] = temp;
-
-        quickSort(s,a,left-1);
-        quickSort(s,left+1,b);*/
-
+        
+        //recursive calls
         if(a<right){
             quickSort(s,a,right);}
         if(left<b){
             quickSort(s,left,b);}
 
-        return (System.nanoTime() - startTime);//how long it took
+        return (System.nanoTime() - startTime);     //total time
     }
 
+    //header method
     public static void header(){
         System.out.println("*******************************************************");
-        System.out.println("Names: Mariam Al-Zubaidi and Morgan Walker\nStudent Numbers: 251077904 and 1111");
-        System.out.println("Goal of this project: ");
+        System.out.println("Names: Mariam Al-Zubaidi and Morgan Walker\nStudent Numbers: 251077904 and 251183118");
+        System.out.println("Goal of this project: Implementing all simple and advanced sorting methods and calculating the time it takes each method \nto sort an array of 50000 random numbers using System.nanoTime().");
         System.out.println("*******************************************************\n");
     }
 
+    //footer method
     public static void footer(){
         System.out.println("\n***************************************");
         //time
-        System.out.println("Completion of Lab Assignment 1 is successful!\n" + "Good bye! yourFullName.");
+        Date time = new Date();
+        SimpleDateFormat theDate = new SimpleDateFormat("dd-MM-yyyy");
+        Date date = new Date();
+        SimpleDateFormat theTime = new SimpleDateFormat("HH:mm:ss");
+        System.out.printf("This is %s on %s\n", theTime.format(time), theDate.format(date)); // prints current time and date
+        System.out.println("Completion of Lab Assignment 1 is successful!\n" + "GoodBye from Mariam Al-Zubaidi and Morgan Walker!");
         System.out.println("***************************************");
     }
 }
