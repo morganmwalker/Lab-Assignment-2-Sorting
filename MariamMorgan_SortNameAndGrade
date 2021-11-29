@@ -1,5 +1,8 @@
 package LA2Q2;
 
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Date;
 import java.util.Vector;
 
 public class MariamMorgan_SortNameAndGrade {
@@ -14,11 +17,48 @@ public class MariamMorgan_SortNameAndGrade {
                 Math.random()*26),(int)(60 + Math.random()*26),(int)(60 +
                 Math.random()*26)};
 
-        //create a Vector<> class inst
+        // create a Vector<> class inst
         Vector<StudentGrade> sg = new Vector<>();
 
+        // add student objects to vector sg
         for (int i = 0; i < grd.length; i++) {
             sg.add(new StudentGrade(fnArray[i],lnArray[i],grd[i]));
+        }
+
+        System.out.println("The Unsorted Array ...............");
+        // print unsorted array using toString
+        for (StudentGrade a : sg) {
+            System.out.println(a.toString());
+        }
+
+        // sort the vector using Collection's sort method
+        Collections.sort(sg);
+        System.out.println("\nSorted by Grades .................");
+        // print sorted vector using toString
+        for (StudentGrade a : sg) {
+            System.out.println(a.toString());
+        }
+
+        // create an array of StudentGrade type with a length of fnArray
+        StudentGrade[] arr = new StudentGrade[fnArray.length];
+
+        //with the help of Vectors copyInto() method, copy sg to StudentGrade array you just created above
+        sg.copyInto(arr);
+
+        // sort by first names using insertion sort method
+        insertionSort(arr, 1);
+        // print the sorted array using toString
+        System.out.println("\nSorted by First Names ............");
+        for (StudentGrade a : arr) {
+            System.out.println(a.toString());
+        }
+
+        // sort by last names using insertion sort method
+        insertionSort(arr, 2);
+        // print new sorted array using toString
+        System.out.println("\nSorted by Last Names .............");
+        for (StudentGrade a : arr) {
+            System.out.println(a.toString());
         }
 
         footer();
@@ -26,17 +66,43 @@ public class MariamMorgan_SortNameAndGrade {
 
     //header
     public static void header(){
-        System.out.println("*******************************************************");
-        System.out.println("Names: Mariam Al-Zubaidi and Morgan Walker\nStudent Numbers: 251077904 and 1111");
-        System.out.println("Goal of this project: ");
-        System.out.println("*******************************************************\n");
+        System.out.println("******************************************************************************************");
+        System.out.println("Names: Mariam Al-Zubaidi and Morgan Walker\nStudent Numbers: 251077904 and 251183118");
+        System.out.println("Goal of this project: sort objects by their different fields using a stable sorting method");
+        System.out.println("******************************************************************************************\n");
     }
 
     //footer
     public static void footer(){
-        System.out.println("\n***************************************");
-        //time
+        System.out.println("\n*************************************************");
+        Date time = new Date();
+        SimpleDateFormat theDate = new SimpleDateFormat("dd-MM-yyyy");
+        Date date = new Date();
+        SimpleDateFormat theTime = new SimpleDateFormat("HH:mm:ss");
+        System.out.printf("This is %s on %s\n", theTime.format(time), theDate.format(date)); // prints current time and date
         System.out.println("Completion of Lab Assignment 2 is successful!\n" + "GoodBye from Mariam Al-Zubaidi and Morgan Walker!");
-        System.out.println("***************************************");
+        System.out.println("*************************************************\n");
+    }
+
+    // insertion sort method
+    public static void insertionSort (StudentGrade[] array, int key){
+        int n = array.length; //length of inputted array
+        for (int i = 1; i < array.length; i++){ // goes through every element of the array, skipping the first
+            StudentGrade comp = array[i];
+            // when the key is 1, the method sorts by first name
+            if (key == 1){
+                for (int j = i - 1; j >= 0 && array[j].getFirstName().compareTo(comp.getFirstName()) > 0; j--){ // goes through last element to first element of array
+                    array[j+1] = array[j];
+                    array[j] = comp;
+                }
+            }
+            // when the key is 1, the method sorts by last name
+            else if (key == 2){
+                for (int j = i - 1; j >= 0 && array[j].getLastName().compareTo(comp.getLastName()) > 0; j--){ //for every element (reverse order of array), starting at a[i-1] to a[0]
+                    array[j+1] = array[j];
+                    array[j] = comp;
+                }
+            }
+        }
     }
 }
