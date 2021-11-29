@@ -1,18 +1,18 @@
 package LA2Q2;
 
 public class StudentGrade implements Comparable<StudentGrade>{
+    // fields
     String firstName, lastName;
     Integer grade;
 
-    StudentGrade(){
-    }
-
+    // constructor
     StudentGrade(String firstName, String lastName, Integer grade){
         this.firstName = firstName;
         this.lastName = lastName;
         this.grade = grade;
     }
 
+    // getter methods
     public String getFirstName(){
         return this.firstName;
     }
@@ -25,6 +25,7 @@ public class StudentGrade implements Comparable<StudentGrade>{
         return this.grade;
     }
 
+    // setter methods
     public void setFirstName(String firstName){
         this.firstName = firstName;
     }
@@ -37,11 +38,14 @@ public class StudentGrade implements Comparable<StudentGrade>{
         this.grade = grade;
     }
 
+    // overridden toString method
     @Override
     public String toString() {
-        return " ";
+        String output = String.format("%-19s:\t%10d",this.firstName + " " + this.lastName, this.grade);
+        return output;
     }
 
+    // overridden compareTo method
     @Override
     public int compareTo(StudentGrade sg) {
         return this.grade.compareTo(sg.grade);
